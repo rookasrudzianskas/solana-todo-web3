@@ -1,7 +1,7 @@
 import * as anchor from '@project-serum/anchor'
 import { useEffect, useMemo, useState } from 'react'
 import { TODO_PROGRAM_PUBKEY } from '../constants'
-import todoIDL from '../constants/todo.json'
+import todoIDL from '../constants/idl.js'
 import toast from 'react-hot-toast'
 import { SystemProgram } from '@solana/web3.js'
 import { utf8 } from '@project-serum/anchor/dist/cjs/utils/bytes'
@@ -23,7 +23,7 @@ let dummyTodos = [
         account:{
             idx: '1',
             content: 'Understand Static Todo App',
-            marked: false,          
+            marked: false,
         }
 
     },
@@ -31,28 +31,28 @@ let dummyTodos = [
         account:{
             idx: '2',
             content: 'Read next chapter of the book in Danish',
-            marked: false,   
+            marked: false,
         }
     },
     {
         account:{
             idx: '3',
             content: 'Do the math for next monday',
-            marked: false,   
+            marked: false,
         }
     },
     {
         account:{
             idx: '4',
             content: 'Send the finished assignment',
-            marked: true,  
+            marked: true,
         }
     },
     {
         account:{
             idx: '5',
             content: 'Read english book chapter 5',
-            marked: true,          
+            marked: true,
         }
     },
 ]
@@ -90,7 +90,7 @@ export function useTodo() {
     const handleChange = (e)=> {
         setInput(e.target.value)
     }
-  
+
     const initializeStaticUser = () => {
         setInitialized(true)
     }
@@ -124,7 +124,7 @@ export function useTodo() {
                   }
                 }
             }
-    
+
             return todo
           }),
         )
@@ -134,9 +134,9 @@ export function useTodo() {
         setTodos(
             todos.filter(todo => {
               if (todo.account.idx === todoID) {
-                return 
+                return
               }
-      
+
               return todo
             }),
           )
