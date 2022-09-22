@@ -17,8 +17,6 @@ function MyApp({ Component, pageProps }) {
     )
 }
 
-export default MyApp
-
-
+export default MyApp;
 
 // https://withered-orbital-mountain.solana-devnet.discover.quiknode.pro/8ddf07c963cfb151ee5298fda08385e1e82c8ff1/
