@@ -110,8 +110,8 @@ export function useTodo() {
             setTodos(dummyTodos)
         }
 
-
-    }, [initialized])
+        findProfileAccounts()
+    }, [publicKey, program, transactionPending])
 
     const handleChange = (e)=> {
         setInput(e.target.value)
