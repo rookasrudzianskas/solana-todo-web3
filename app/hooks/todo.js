@@ -79,8 +79,34 @@ export function useTodo() {
     }, [connection, anchorWallet])
 
     useEffect(() => {
+            // fetch the userProfile if there is a profile the get it is TodoAccounts
+        const findProfileAccounts = async () => {
+            if (program && publicKey && !transactionPending) {
+                try {
+                    setLoading(true);
+                    const [profilePda, profileBump] = findProgramAddressSync([utf8.encode('USER_STATE'), publicKey.toBuffer()], program.programId);
+                    const profileAccount = await program.account.userProfile.fetch(profilePda);
 
-        if(initialized) {
+                    if(profileAccount) {
+                        setLastTodo(profileAccount.lastTodo);
+                        setInitialized(true);
+
+                        const todoAccounts = await program.account.todoAccount.all([authorFilter(publicKey.toString())]);
+                        setTodos(todoAccounts);
+                    } else {
+                        setInitialized(false);
+                    }
+
+                } catch(err) {
+                    console.log(err);
+                    setInitialized(false);
+                    setTodos([]);
+                } finally {
+                    setLoading(false);
+                }
+            }
+        }
+            if(initialized) {
             setTodos(dummyTodos)
         }
 
