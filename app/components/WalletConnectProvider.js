@@ -22,8 +22,7 @@ export const WalletConnectProvider = ({ children }) => {
     // Only the wallets you configure here will be compiled into your application, and only the dependencies
     // of wallets that your users connect to will be loaded.
 
-    const wallets = useMemo(() => (), input);
-
+    const wallets = useMemo(() => [new PhantomWalletAdapter()], [network]);
 
     return (
         <ConnectionProvider endpoint={endpoint}>
