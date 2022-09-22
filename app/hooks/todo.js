@@ -111,7 +111,32 @@ export function useTodo() {
         }
 
         findProfileAccounts()
-    }, [publicKey, program, transactionPending])
+    }, [publicKey, program, transactionPending]);
+
+    const initializeUser = async () => {
+        if (program && publicKey) {
+            try {
+                setTransactionPending(true)
+                const [profilePda, profileBump] = findProgramAddressSync([utf8.encode('USER_STATE'), publicKey.toBuffer()], program.programId);
+
+                const tx = await program.methods
+                    .initializeUser()
+                    .accounts({
+                        userProfile: profilePda,
+                        authority: publicKey,
+                        systemProgram: SystemProgram.programId,
+                    })
+                    .rpc();
+                setInitialized(true);
+                toast.success('Successfully initialized user.');
+            } catch (error) {
+                console.log(error);
+                toast.error(error.toString());
+            } finally {
+                setTransactionPending(false);
+            }
+        }
+    }
 
     const handleChange = (e)=> {
         setInput(e.target.value)
